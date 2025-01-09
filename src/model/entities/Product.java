@@ -40,5 +40,11 @@ public class Product {
 		return this.quantity * this.unitPrice;
 	}
 	
+	@Override
+	public String toString() {
+		return "Product: " + name + 
+				" Price: $" + unitPrice +
+				" Quantity: " + quantity;
+	}
 	
 }
