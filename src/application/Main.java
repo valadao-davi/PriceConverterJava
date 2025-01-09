@@ -18,14 +18,15 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Set the path for your products: ");
+		System.out.println("Enter the path of your file products: ");
 		String strPath =  sc.nextLine();
+		
 		File path = new File(strPath);
-
-		File[] files = path.listFiles(File:: isFile);
+		String folderParent = path.getParent();
+		
 		List<Product> listProducts = new ArrayList<>();
 
-		try(BufferedReader br = new BufferedReader(new FileReader(files[0]))){
+		try(BufferedReader br = new BufferedReader(new FileReader(strPath))){
 			String line = br.readLine();
 			while(line != null) {
 				String[] lineString = line.toString().split(",");
@@ -41,10 +42,11 @@ public class Main {
 		}
 		
 		
-		boolean success = new File(strPath + "\\out").mkdir();
+		boolean success = new File(folderParent + "\\out").mkdir();
 
+		String newFileCsv = folderParent + "\\out\\summary.csv";
 		if(success) {
-			try(BufferedWriter br = new BufferedWriter(new FileWriter(strPath+"\\out\\summary.csv"))){
+			try(BufferedWriter br = new BufferedWriter(new FileWriter(newFileCsv))){
 				for(Product product : listProducts) {
 					br.write(product.getName() + "," + product.calculatePrice() + "\n");
 				}
